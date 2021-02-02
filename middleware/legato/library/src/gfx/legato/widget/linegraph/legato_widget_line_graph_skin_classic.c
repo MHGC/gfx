@@ -240,12 +240,12 @@ static void _getCategoryLabelMaxDrawRect(const leLineGraphWidget* graph,
 
         //strRect.adjust(0, 0, 0, 1);
 
-        if(strRect.height > labelRect->height)
+        if(strRect.height > (int)labelRect->height)
         {
             labelRect->height = strRect.height;
         }
 
-        if(strRect.width > labelRect->width)
+        if(strRect.width > (int)labelRect->width)
         {
             labelRect->width = strRect.width;
         }
