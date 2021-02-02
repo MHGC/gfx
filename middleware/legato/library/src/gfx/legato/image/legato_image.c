@@ -413,7 +413,7 @@ void leProcessImage(leImage* img,
                    img->buffer.size.width,
                    img->buffer.size.height,
                    mode,
-                   addr,
+                   (void*)addr,
                    LE_STREAM_LOCATION_ID_INTERNAL);
 
     srcRect.x = 0;
