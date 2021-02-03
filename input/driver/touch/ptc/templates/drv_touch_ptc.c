@@ -67,13 +67,26 @@ typedef struct
 
 DRV_TOUCH_PTC_OBJ drv_touch_ptc_obj;
 
+#if TOUCH_POINTS_COUNT == 2
+extern qtm_surface_cs2t_control_t qtm_surface_cs_control1;
+#else
 extern qtm_surface_cs_control_t qtm_surface_cs_control1;
+#endif
+
+#ifdef GESTURES_ENABLED
+extern qtm_gestures_2d_control_t qtm_gestures_2d_control1;
+#endif
+
 extern volatile uint8_t time_to_measure_touch_var;
 
 //Wrapper function that returns true if there is an active touch input
 static inline bool drv_touch_ptc_get_surface_active_status(void)
 {
+#ifdef GESTURES_ENABLED    
+    return qtm_surface_cs_control1.qtm_surface_contact_data[0].qt_contact_status & TOUCH_ACTIVE;
+#else
     return qtm_surface_cs_control1.qtm_surface_contact_data[0].qt_surface_status & TOUCH_ACTIVE;
+#endif
 }
 
 static inline uint8_t drv_touch_ptc_get_surface_data_x_value(void)
@@ -93,6 +106,95 @@ static inline uint8_t drv_touch_ptc_get_surface_data_y_value(void)
     return qtm_surface_cs_control1.qtm_surface_contact_data->v_position;
 #endif
 }
+
+#ifdef GESTURES_ENABLED
+//Wrapper function that returns true if a gesture is detected
+static inline uint8_t drv_touch_ptc_get_gesture_active_status(void)
+{
+   return qtm_gestures_2d_control1.qtm_gestures_2d_data->gestures_status;
+}
+
+//Wrapper function that returns the current detected gesture
+static inline uint8_t drv_touch_ptc_get_which_gesture(void)
+{
+    return qtm_gestures_2d_control1.qtm_gestures_2d_data->gestures_which_gesture;
+}
+
+//Wrapper function that returns the current detected gesture
+static inline uint8_t drv_touch_ptc_get_gesture_info(void)
+{
+    return qtm_gestures_2d_control1.qtm_gestures_2d_data->gestures_info;
+}
+
+
+//returns true if a valid gesture is processed, false if not
+bool drv_touch_ptc_process_gesture(int x, int y)
+{
+    bool gesture_active = false;
+     
+    if (drv_touch_ptc_get_gesture_active_status() != 0)
+    {
+        uint8_t gesture = drv_touch_ptc_get_which_gesture();
+        uint8_t info = drv_touch_ptc_get_gesture_info();
+        gesture_active = true;
+
+        switch (gesture)
+        {
+            case RIGHT_SWIPE:
+            {
+                SYS_INP_InjectFlickGesture(x, y, 0, (uint16_t) info);
+                break;
+            }
+            case LEFT_SWIPE:
+            {
+                SYS_INP_InjectFlickGesture(x, y, 180, (uint16_t) info);
+                break;
+            }
+            case UP_SWIPE:
+            {
+                SYS_INP_InjectFlickGesture(x, y, 90, (uint16_t) info);
+                break;
+            }
+            case DOWN_SWIPE:
+            {
+                SYS_INP_InjectFlickGesture(x, y, 270, (uint16_t) info);
+                break;
+            }
+            case PINCH:
+            {
+                uint16_t angle = 45; //Fix me, get actual angle from lib
+                uint16_t sep = 100; //Fix me, get actual sep from lib
+
+                SYS_INP_InjectPinchGesture(x, y, angle, sep);
+                break;
+            }
+            case ZOOM:
+            {
+                uint16_t angle = 45; //Fix me, get actual angle from lib
+                uint16_t sep = 100; //Fix me, get actual sep from lib
+
+                SYS_INP_InjectStretchGesture(x, y, angle, sep);
+                break;
+            }
+            case TAP:
+            {
+                SYS_INP_InjectTouchUp(PTC_TOUCH_ID, x, y);
+                SYS_INP_InjectTouchDown(PTC_TOUCH_ID, x, y);
+                break;
+            }
+            default:
+            {
+                gesture_active = false;
+                break;
+            }
+        }
+        
+        qtm_gestures_2d_clearGesture();
+    }
+    
+    return gesture_active;
+}
+#endif
 
 void drv_touch_ptc_init (void)
 {
@@ -147,8 +249,20 @@ void drv_touch_ptc_task (void)
             delta = y - (MAX_POS_VALUE/2);
             delta = (delta * TOUCH_SCREEN_ACTIVE_HEIGHT)/MAX_POS_VALUE;
             y = TOUCH_SCREEN_ACTIVE_HEIGHT/2 + delta;
-            
+
+#ifdef GESTURES_ENABLED  
+            //Check if a gesture is detected
+            if (drv_touch_ptc_process_gesture(x, y) == true)
+            {
+                drv_touch_ptc_obj.xpos = x;
+                drv_touch_ptc_obj.ypos = y;
+                
+                drv_touch_ptc_obj.drv_state = DRV_TOUCH_PTC_CHECK;
+            }
+            else if (drv_touch_ptc_obj.touch_state == DRV_TOUCH_PTC_TOUCH_PRESSED)
+#else
             if (drv_touch_ptc_obj.touch_state == DRV_TOUCH_PTC_TOUCH_PRESSED)
+#endif                
             {
                 //check if moved
                 if ((x != drv_touch_ptc_obj.xpos) ||
@@ -156,7 +270,7 @@ void drv_touch_ptc_task (void)
                 {
                     drv_touch_ptc_obj.xpos = x;
                     drv_touch_ptc_obj.ypos = y;
-                    
+
                     SYS_INP_InjectTouchMove(PTC_TOUCH_ID,
                                             drv_touch_ptc_obj.xpos,
                                             drv_touch_ptc_obj.ypos);
