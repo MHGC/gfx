@@ -229,6 +229,8 @@ static void _getCategoryLabelMaxDrawRect(const leLineGraphWidget* graph,
     leLineGraphCategory* cat;
     leRect strRect;
 
+    *labelRect = leRect_Zero;
+
     for(uint32_t i = 0; i < graph->categories.size; ++i)
     {
         cat = (leLineGraphCategory*)graph->categories.values[i];
