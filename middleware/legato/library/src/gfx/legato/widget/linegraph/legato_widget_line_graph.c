@@ -737,7 +737,7 @@ static leResult setDataInSeries(leLineGraphWidget* _this,
                         index,
                         &prevDamagedRect);
 
-    series->data.values[index] = value;
+    series->data.values[index] = (void*)value;
 
     getValueDamagedRect(_this,
                         seriesID,

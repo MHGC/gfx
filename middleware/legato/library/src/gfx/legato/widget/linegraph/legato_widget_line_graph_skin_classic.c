@@ -262,11 +262,11 @@ static void _getValueLabelMaxDrawRect(const leLineGraphWidget* graph,
     if(graph->ticksLabelFont == NULL)
         return;
 
-    sprintf(paintState.strbuff, "%i", graph->minValue);
+    sprintf(paintState.strbuff, "%ld", graph->minValue);
 
     leStringUtils_GetRectCStr(paintState.strbuff, graph->ticksLabelFont, &minRect);
 
-    sprintf(paintState.strbuff, "%i", graph->maxValue);
+    sprintf(paintState.strbuff, "%ld", graph->maxValue);
 
     leStringUtils_GetRectCStr(paintState.strbuff, graph->ticksLabelFont, &maxRect);
 
