@@ -58,9 +58,14 @@
 
 #define TOUCH_POINTS_COUNT ${TouchPoints}
 
-#define PTC_TOUCH_ID 0
 #define PTC_SURFACE_CS_RESOLUTION_BITS ${DataResolutionBits}
 
+<#if GestureSupport == true>
+#define GESTURES_ENABLED 1
+</#if>
+<#if MultiTouchSupport == true>	
+#define MULTITOUCH_ENABLED 1
+</#if>	
 <#if HorzTouchDataFlip == true>
 #define FLIP_X  1
 </#if>
@@ -68,16 +73,13 @@
 #define FLIP_Y  1
 </#if>
 
-<#if GestureSupport == true>
-#define GESTURES_ENABLED 1
-        
-#define GESTURE_RIGHT_SWIPE 0x10u
-#define GESTURE_LEFT_SWIPE  0x20u
-#define GESTURE_UP_SWIPE    0x30u
-#define GESTURE_DOWN_SWIPE  0x40u
-#define GESTURE_PINCH       0xc0u
-#define GESTURE_ZOOM        0xc1u
-</#if>
+typedef enum
+{
+    PTC_TOUCH_ID,
+<#if MultiTouchSupport == true>	
+    PTC_TOUCH_ID_2,
+</#if>	
+} PTC_TOUCH_IDS;
 
 typedef enum
 {

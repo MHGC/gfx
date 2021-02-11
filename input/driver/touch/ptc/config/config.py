@@ -85,6 +85,11 @@ GestureSupport.setLabel("Enable Gestures")
 GestureSupport.setDescription("Enable Touch Gestures")
 GestureSupport.setDefaultValue(False)
 
+MultiTouchSupport = comp.createBooleanSymbol("MultiTouchSupport", DriverSettings)
+MultiTouchSupport.setLabel("Enable Multi-Touch")
+MultiTouchSupport.setDescription("Report Multiple Touch Points")
+MultiTouchSupport.setDefaultValue(False)
+
 RTOSMenu = comp.createMenuSymbol("RTOSMenu", None)
 RTOSMenu.setLabel("RTOS Settings")
 RTOSMenu.setDescription("RTOS Settings")
