@@ -25,9 +25,8 @@
 def loadModule():	
     if ("L22" in str(Variables.get("__PROCESSOR"))):
         print("SLCD module loaded to support " + str(Variables.get("__PROCESSOR")))
-        cntlComponent = Module.CreateComponent("le_gfx_slcd", "LE SLCD Driver", "/Graphics/Driver", "config/slcd.py")
-        cntlComponent.setDisplayType("LE SLCD Display Driver")
-        cntlComponent.addCapability("le_gfx_driver_slcd", "LE Display Driver", False)
-        cntlComponent.addDependency("Graphics Display", "Graphics Display", False)
+        cntlComponent = Module.CreateComponent("le_gfx_slcd", "SLCD Driver", "/Graphics/Driver", "config/slcd.py")
+        cntlComponent.setDisplayType("SLCD Display Driver")
+        cntlComponent.addDependency("Segmented Display", "Segmented Display", False)
     else:
-        print("LE SLCD module not loaded.  No support for " + str(Variables.get("__PROCESSOR")))
+        print("SLCD module not loaded.  No support for " + str(Variables.get("__PROCESSOR")))

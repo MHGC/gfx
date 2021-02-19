@@ -23,7 +23,7 @@
 ##############################################################################
 
 def instantiateComponent(comp):
-	projectPath = "config/" + Variables.get("__CONFIGURATION_NAME") + "/gfx/driver/lcdc"
+	projectPath = "config/" + Variables.get("__CONFIGURATION_NAME") + "/gfx/driver/slcd"
 	
 	# these two symbols are read by the HAL for initialization purposes
 	# they must match the function names in the actual driver code
@@ -203,9 +203,6 @@ def instantiateComponent(comp):
 
 def onAttachmentConnected(source, target):
 	print("dependency Connected = " + target["component"].getDisplayName())
-	gfxCoreComponentTable = ["gfx_hal_le"]
-	if (Database.getComponentByID("gfx_hal_le") is None):
-		Database.activateComponents(gfxCoreComponentTable)
 
 def showRTOSMenu(symbol, event):
 	symbol.setVisible(event["value"] != "BareMetal")

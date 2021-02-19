@@ -25,5 +25,5 @@
 def loadModule():
         component = Module.CreateComponent("gfx_disp_slcd1-xpro_8x24", "SLCD1 Xplained Pro", "/Graphics/Displays/", "slcd1-xpro.py")
         component.setDisplayType("8x24 maXTouch Xplained Pro")
-	component.addCapability("gfx_display", "Graphics Display", False)
+	component.addCapability("slcd_display", "Segmented Display", False)
 	#component.addCapability("touch_panel", "Touch Panel", False)
