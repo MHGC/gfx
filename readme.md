@@ -45,6 +45,7 @@ The key features of the MPLAB® Harmony Graphics Suite are the following:
 - Multi-image support for industry standard formats, compression choices, external memory accessibility
 - Fully functional demonstrations and quick-starts to enable new development
 - Low memory and low power configurable
+- Segmented LCD Controller driver
 
 
 # Contents Summary
@@ -65,6 +66,7 @@ The performance improved graphics for MPLAB® Harmony Graphics Suite. Supports M
 |      |   lcc |  Driver for the LCC software display controller| ![app-beta](https://img.shields.io/badge/driver-beta-orange?style=plastic) |
 |      |   gfx2d | Driver for the GFX2D graphics processor| ![app-beta](https://img.shields.io/badge/driver-beta-orange?style=plastic) |
 |      |   lcdc | Driver for the LCDC display controller peripheral | ![app-beta](https://img.shields.io/badge/driver-beta-orange?style=plastic) |
+|      |   slcd | Driver for the Segmented LCD display controller peripheral | ![app-beta](https://img.shields.io/badge/driver-beta-orange?style=plastic) |
 |      |   external controller |  Driver generator for external display controllers | ![app-beta](https://img.shields.io/badge/driver-beta-orange?style=plastic) |
 |      |   ssd1963 | Driver for the ssd1963 display controller | ![app-beta](https://img.shields.io/badge/driver-deprecated-red?style=plastic) |
 |      |   ili9488  | Display Driver for the ili9488 controller | ![app-beta](https://img.shields.io/badge/driver-deprecated-red?style=plastic) |
