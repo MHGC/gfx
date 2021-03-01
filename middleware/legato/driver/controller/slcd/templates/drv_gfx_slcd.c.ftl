@@ -141,9 +141,6 @@
 #define CONF_SLCD_PIN_L_MASK       ${PinMaskLow}
 #define CONF_SLCD_PIN_H_MASK       ${PinMaskHigh}
 
-#define SLCD_MAX_COM                8        // Max number of COM lines (4 or 8)
-#define SLCD_MAX_SEG                44       // Max number of SEG lines (24 or 44)
-
 /**** Hardware Abstraction Interfaces ****/
 typedef enum
 {
