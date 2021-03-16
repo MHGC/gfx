@@ -20,7 +20,7 @@ the following graphics links for release notes, home page, training materials, f
 Graphics application examples can be found at various [device-family specific repositories](./apps/readme.md).
  - [Release Notes](./release_notes.md)
  - [MPLAB® Harmony License](./mplab_harmony_license.md)
- - [MPLAB® Harmony 3 Graphics Wiki](https://github.com/Microchip-MPLAB-Harmony/gfx/wiki)
+ - [MPLAB® Harmony 3 Graphics User Guides Wiki](https://github.com/mchpgfx/legato.docs/wiki)
  - [MPLAB® Harmony 3 Graphics API Help](./docs/legato/html/index.html)
  - [MPLAB® Harmony 3 Graphics Applications](./apps/readme.md)
  - [MPLAB® Harmony 3 Graphics Videos](https://www.youtube.com/playlist?list=PL9B4edd-p2ag5xsIIHhja-caKYY7AKPxe)
